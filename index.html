@@ -109,6 +109,9 @@
     }
 
     .role-tab {
+      position: relative;
+      z-index: 2;
+      touch-action: manipulation;
       padding: 10px 8px;
       border: none;
       border-radius: 7px;
@@ -877,8 +880,21 @@
     measurementId: "G-CHEMNZ8CR6"
   };
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+  let db = null;
+  let firebaseInitError = null;
+  try {
+    if (typeof firebase !== "undefined") {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      db = firebase.firestore();
+    } else {
+      firebaseInitError = "Chưa tải được thư viện Firebase (kiểm tra kết nối mạng hoặc mở bằng Safari/Chrome).";
+    }
+  } catch (e) {
+    firebaseInitError = e.message || String(e);
+    console.error("Firebase init error:", e);
+  }
 
   const defaultPrompt = `Some people think that the best way to reduce crime is to give longer prison sentences. Others, however, believe there are better alternative ways of reducing crime.
 
@@ -1183,6 +1199,11 @@ Discuss both views and give your own opinion.`;
   // ĐỒNG BỘ FIREBASE PHÍA HỌC VIÊN
   // =========================================================
   function initStudentSync() {
+    if (!db) {
+      document.getElementById("saveIndicator").style.color = "#dc2626";
+      document.getElementById("saveIndicator").textContent = "⚠️ " + (firebaseInitError || "Lỗi Firebase");
+      return;
+    }
     const roomRef = db.collection("writing_rooms").doc(currentRoom);
 
     roomRef.onSnapshot((doc) => {
@@ -1231,7 +1252,7 @@ Discuss both views and give your own opinion.`;
   }
 
   function pushStudentDataToFirestore(evalObj = null) {
-    if (!currentRoom || !studentId) return;
+    if (!db || !currentRoom || !studentId) return;
     const essayText = document.getElementById("essayTextarea").value;
     const outlineText = document.getElementById("studentOutlineBox").value;
     const wc = countWords(essayText);
@@ -1310,6 +1331,14 @@ Discuss both views and give your own opinion.`;
   // ĐỒNG BỘ FIREBASE PHÍA GIÁO VIÊN & XUẤT FILE EXCEL (.XLSX)
   // =========================================================
   async function initTeacherSync() {
+    document.getElementById("teacherPromptInput").value = defaultPrompt;
+    document.getElementById("teacherOutlineInput").value = defaultOutline;
+    if (!db) {
+      const errBox = document.getElementById("teacherErrorBox");
+      errBox.style.display = "block";
+      errBox.textContent = "⚠️ " + (firebaseInitError || "Không kết nối được Firebase");
+      return;
+    }
     const roomRef = db.collection("writing_rooms").doc(currentRoom);
     document.getElementById("teacherPromptInput").value = defaultPrompt;
     document.getElementById("teacherOutlineInput").value = defaultOutline;
@@ -1386,6 +1415,7 @@ Discuss both views and give your own opinion.`;
   }
 
   async function pushRoomPrompt() {
+    if (!db) { alert(firebaseInitError || "Chưa kết nối được Firebase"); return; }
     const promptVal = document.getElementById("teacherPromptInput").value;
     const outlineVal = document.getElementById("teacherOutlineInput").value;
     try {
