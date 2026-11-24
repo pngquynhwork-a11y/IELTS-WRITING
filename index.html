@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Firebase Compat SDKs (Firestore Real-Time Sync) -->
+  <!-- Firebase Compat SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
@@ -30,26 +30,23 @@
       --amber-bg: #fef3c7;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Google Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
       font-size: 16px;
     }
 
-    /* =========================================================
-       LOGIN / ROLE SELECTION MODAL
-       ========================================================= */
+    @media (min-width: 861px) {
+      body { height: 100vh; overflow: hidden; }
+    }
+
+    /* LOGIN MODAL */
     #entryModal {
       position: fixed;
       inset: 0;
@@ -59,15 +56,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
+      overflow-y: auto;
     }
 
     .entry-card {
       background: #ffffff;
-      max-width: 540px;
+      max-width: 520px;
       width: 100%;
       border-radius: 16px;
-      padding: 34px 38px;
+      padding: 28px 30px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       border-top: 6px solid var(--primary);
     }
@@ -77,15 +75,14 @@
       background: #dc2626;
       color: #ffffff;
       font-weight: 800;
-      font-size: 13px;
+      font-size: 12.5px;
       padding: 4px 10px;
       border-radius: 5px;
-      letter-spacing: 0.5px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .entry-card h1 {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       color: #0f172a;
       margin-bottom: 6px;
@@ -93,45 +90,40 @@
     }
 
     .entry-card p.sub {
-      font-size: 14.5px;
+      font-size: 14px;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .role-switcher {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 6px;
       background: #f1f5f9;
       padding: 5px;
       border-radius: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       border: 1px solid #e2e8f0;
     }
 
     .role-tab {
-      padding: 10px;
+      padding: 10px 8px;
       border: none;
       border-radius: 7px;
       font-family: inherit;
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 700;
       cursor: pointer;
       background: transparent;
       color: var(--text-muted);
-      transition: all 0.2s;
     }
 
     .role-tab.active {
       background: var(--primary);
       color: #ffffff;
-      box-shadow: 0 2px 6px rgba(26, 115, 232, 0.25);
     }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
-
+    .form-group { margin-bottom: 14px; }
     .form-group label {
       display: block;
       font-size: 14px;
@@ -140,10 +132,7 @@
       margin-bottom: 6px;
     }
 
-    .input-row {
-      display: flex;
-      gap: 8px;
-    }
+    .input-row { display: flex; gap: 8px; }
 
     .form-group input {
       width: 100%;
@@ -153,38 +142,27 @@
       border: 1.5px solid #cbd5e1;
       border-radius: 8px;
       outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-group input:focus {
-      border-color: var(--primary);
     }
 
     .btn-gen-code {
-      padding: 0 14px;
+      padding: 0 12px;
       background: #f1f5f9;
       border: 1.5px solid #cbd5e1;
       border-radius: 8px;
-      font-family: inherit;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13.5px;
       cursor: pointer;
       white-space: nowrap;
-      color: #1e293b;
-    }
-
-    .btn-gen-code:hover {
-      background: #e2e8f0;
     }
 
     .rules-box {
       background: #fffbeb;
       border: 1px solid #fde68a;
       border-radius: 8px;
-      padding: 12px 15px;
-      font-size: 13.5px;
+      padding: 10px 14px;
+      font-size: 13px;
       color: #78350f;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       line-height: 1.5;
     }
 
@@ -199,16 +177,9 @@
       border: none;
       border-radius: 9px;
       cursor: pointer;
-      transition: background 0.2s;
     }
 
-    .btn-primary-full:hover {
-      background: var(--primary-dark);
-    }
-
-    /* =========================================================
-       ANTI-CHEAT LOCK OVERLAY (STUDENT)
-       ========================================================= */
+    /* ANTI-CHEAT MODAL */
     #antiCheatModal {
       position: fixed;
       inset: 0;
@@ -219,77 +190,63 @@
       justify-content: center;
       color: #ffffff;
       text-align: center;
-      padding: 24px;
+      padding: 20px;
     }
 
     .cheat-card {
-      max-width: 480px;
+      max-width: 460px;
       background: #7f1d1d;
-      padding: 32px;
+      padding: 28px;
       border-radius: 14px;
       border: 2px solid #fca5a5;
-      box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5);
-    }
-
-    .cheat-card h2 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    .cheat-card p {
-      font-size: 15.5px;
-      margin-bottom: 20px;
-      line-height: 1.5;
     }
 
     .btn-return {
       background: #ffffff;
       color: #991b1b;
       border: none;
-      padding: 11px 24px;
-      font-family: inherit;
+      padding: 11px 22px;
       font-weight: 700;
       font-size: 15px;
       border-radius: 7px;
       cursor: pointer;
+      margin-top: 16px;
     }
 
-    /* =========================================================
-       TOP HEADER BAR
-       ========================================================= */
+    /* RESPONSIVE HEADER (NO OVERLAP ON MOBILE) */
     header {
       background: #ffffff;
       border-bottom: 1px solid var(--border);
-      height: 62px;
-      padding: 0 24px;
+      padding: 10px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
       flex-shrink: 0;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-      gap: 12px;
     }
 
-    .header-left {
+    .header-left, .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .header-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       color: #0f172a;
       text-transform: uppercase;
-      letter-spacing: 0.3px;
     }
 
     .room-pill {
       background: var(--primary-light);
       color: var(--primary-dark);
       font-weight: 700;
-      font-size: 13.5px;
-      padding: 4px 12px;
+      font-size: 13px;
+      padding: 3px 10px;
       border-radius: 20px;
       border: 1px solid #bfdbfe;
     }
@@ -297,78 +254,56 @@
     .sync-status {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 13px;
+      gap: 5px;
+      font-size: 12.5px;
       font-weight: 600;
       color: var(--green);
       background: var(--green-bg);
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 20px;
     }
 
     .sync-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--green);
-      animation: blink 1.5s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
     }
 
     .violation-badge {
       background: var(--red-bg);
       color: var(--red);
       border: 1px solid #fca5a5;
-      font-size: 13.5px;
+      font-size: 12.5px;
       font-weight: 700;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 7px;
     }
 
     .timer-box {
       font-family: 'Courier New', monospace;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       color: #dc2626;
       background: #fef2f2;
       border: 1px solid #fecaca;
-      padding: 5px 14px;
-      border-radius: 8px;
-    }
-
-    .btn-action {
-      font-family: inherit;
-      font-size: 14.5px;
-      font-weight: 700;
-      padding: 8px 18px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 4px 10px;
+      border-radius: 7px;
     }
 
     .btn-submit {
       background: var(--green);
       color: #ffffff;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
     }
 
-    .btn-submit:hover {
-      background: #15803d;
-    }
-
-    /* =========================================================
-       STUDENT SPLIT-SCREEN WORKSPACE
-       ========================================================= */
+    /* WORKSPACES */
     #studentWorkspace {
       display: none;
       grid-template-columns: 0.9fr 1.1fr;
@@ -380,7 +315,7 @@
       background: #ffffff;
       border-right: 1px solid var(--border);
       overflow-y: auto;
-      padding: 24px 28px;
+      padding: 20px;
     }
 
     .prompt-card {
@@ -388,21 +323,20 @@
       border: 1.5px solid #cbd5e1;
       border-left: 5px solid var(--primary);
       border-radius: 10px;
-      padding: 18px 20px;
-      margin-bottom: 20px;
+      padding: 15px 18px;
+      margin-bottom: 16px;
     }
 
     .prompt-label {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
       color: var(--primary);
       margin-bottom: 6px;
     }
 
     .prompt-text {
-      font-size: 16.5px;
+      font-size: 15.5px;
       font-weight: 700;
       color: #0f172a;
       line-height: 1.55;
@@ -413,18 +347,20 @@
       background: #fffbeb;
       border: 1.5px solid #fde68a;
       border-radius: 10px;
-      padding: 18px 20px;
+      padding: 15px 18px;
     }
 
     .outline-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
     .outline-label {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 800;
       color: #b45309;
       text-transform: uppercase;
@@ -432,13 +368,13 @@
 
     .outline-editor {
       width: 100%;
-      min-height: 290px;
+      min-height: 220px;
       border: 1px solid #fcd34d;
       border-radius: 8px;
-      padding: 12px 14px;
+      padding: 10px 12px;
       font-family: inherit;
-      font-size: 15px;
-      line-height: 1.65;
+      font-size: 14.5px;
+      line-height: 1.6;
       background: #ffffff;
       color: #1e293b;
       resize: vertical;
@@ -449,7 +385,7 @@
       background: #f1f5f9;
       display: flex;
       flex-direction: column;
-      padding: 20px 26px;
+      padding: 16px 20px;
       overflow: hidden;
     }
 
@@ -461,28 +397,31 @@
       border: 1.5px solid #cbd5e1;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      min-height: 340px;
     }
 
     .essay-toolbar {
       background: #f8fafc;
       border-bottom: 1px solid #e2e8f0;
-      padding: 10px 18px;
+      padding: 9px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 14px;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 13.5px;
       color: var(--text-muted);
     }
 
     #essayTextarea {
       flex: 1;
       width: 100%;
+      min-height: 240px;
       border: none;
-      padding: 22px 26px;
+      padding: 16px 18px;
       font-family: 'Georgia', 'Times New Roman', serif;
-      font-size: 17.5px;
-      line-height: 1.85;
+      font-size: 16.5px;
+      line-height: 1.75;
       color: #0f172a;
       resize: none;
       outline: none;
@@ -491,36 +430,30 @@
     .word-count-bar {
       background: #f8fafc;
       border-top: 1px solid #e2e8f0;
-      padding: 10px 20px;
+      padding: 9px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 14.5px;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 14px;
       font-weight: 600;
     }
 
     .wc-badge {
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 20px;
       font-weight: 700;
+      font-size: 13px;
     }
 
-    .wc-low {
-      background: var(--amber-bg);
-      color: var(--amber);
-    }
+    .wc-low { background: var(--amber-bg); color: var(--amber); }
+    .wc-good { background: var(--green-bg); color: var(--green); }
 
-    .wc-good {
-      background: var(--green-bg);
-      color: var(--green);
-    }
-
-    /* =========================================================
-       TEACHER LIVE DASHBOARD WORKSPACE
-       ========================================================= */
+    /* TEACHER DASHBOARD */
     #teacherWorkspace {
       display: none;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: 350px 1fr;
       flex: 1;
       overflow: hidden;
     }
@@ -528,34 +461,30 @@
     .teacher-sidebar {
       background: #ffffff;
       border-right: 1px solid var(--border);
-      padding: 20px;
+      padding: 18px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .teacher-sidebar h3 {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .teacher-sidebar textarea {
       width: 100%;
       font-family: inherit;
-      font-size: 14.5px;
-      padding: 10px 12px;
+      font-size: 14px;
+      padding: 9px 11px;
       border: 1.5px solid #cbd5e1;
       border-radius: 8px;
-      line-height: 1.55;
+      line-height: 1.5;
       resize: vertical;
       outline: none;
-    }
-
-    .teacher-sidebar textarea:focus {
-      border-color: var(--primary);
     }
 
     .btn-push-prompt {
@@ -565,26 +494,21 @@
       color: #ffffff;
       border: none;
       border-radius: 8px;
-      font-family: inherit;
       font-weight: 700;
       font-size: 14.5px;
       cursor: pointer;
     }
 
-    .btn-push-prompt:hover {
-      background: var(--primary-dark);
-    }
-
     .teacher-main {
-      padding: 22px 26px;
+      padding: 18px 22px;
       overflow-y: auto;
       background: #f1f5f9;
     }
 
     .students-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
     }
 
     .student-live-card {
@@ -594,51 +518,42 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
 
-    .student-live-card.submitted-card {
-      border-color: var(--green);
-    }
+    .student-live-card.submitted-card { border-color: var(--green); }
 
     .sl-header {
       background: #1e293b;
       color: #ffffff;
-      padding: 10px 16px;
+      padding: 9px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .sl-name {
-      font-weight: 700;
-      font-size: 15.5px;
-    }
-
     .sl-meta {
       background: #f8fafc;
-      padding: 7px 16px;
+      padding: 6px 14px;
       border-bottom: 1px solid #e2e8f0;
       display: flex;
       justify-content: space-between;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
     }
 
     .sl-essay-preview {
-      padding: 14px 16px;
+      padding: 12px 14px;
       font-family: 'Georgia', serif;
       font-size: 14.5px;
-      line-height: 1.65;
+      line-height: 1.6;
       color: #1e293b;
-      height: 210px;
+      height: 190px;
       overflow-y: auto;
       white-space: pre-wrap;
-      background: #ffffff;
     }
 
     .sl-footer {
-      padding: 8px 14px;
+      padding: 7px 12px;
       background: #f8fafc;
       border-top: 1px solid #e2e8f0;
       display: flex;
@@ -649,15 +564,13 @@
       background: var(--primary-light);
       color: var(--primary-dark);
       border: 1px solid #bfdbfe;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 6px;
-      font-family: inherit;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
 
-    /* TEACHER INSPECT FULL ESSAY MODAL */
     #inspectModal {
       position: fixed;
       inset: 0;
@@ -666,12 +579,12 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
 
     .inspect-card {
       background: #ffffff;
-      max-width: 820px;
+      max-width: 800px;
       width: 100%;
       max-height: 88vh;
       border-radius: 14px;
@@ -683,27 +596,27 @@
     .inspect-header {
       background: #1e293b;
       color: #ffffff;
-      padding: 14px 22px;
+      padding: 12px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .inspect-body {
-      padding: 24px 28px;
+      padding: 20px;
       overflow-y: auto;
       font-family: 'Georgia', serif;
-      font-size: 17px;
-      line-height: 1.85;
+      font-size: 16px;
+      line-height: 1.8;
       white-space: pre-wrap;
     }
 
     @media (max-width: 860px) {
       #studentWorkspace, #teacherWorkspace {
         grid-template-columns: 1fr;
+        overflow: visible;
       }
       .left-pane, .teacher-sidebar {
-        height: 42vh;
         border-right: none;
         border-bottom: 1px solid var(--border);
       }
@@ -712,14 +625,12 @@
 </head>
 <body>
 
-  <!-- =========================================================
-       1. LOGIN / ROLE SELECTION MODAL
-       ========================================================= -->
+  <!-- 1. LOGIN MODAL -->
   <div id="entryModal">
     <div class="entry-card">
       <span class="badge-ielts">IELTS WRITING TASK 2</span>
       <h1>ielts writing task 2</h1>
-      <p class="sub">Hệ thống luyện viết theo thời gian thực (Live Sync) kết nối trực tiếp Giáo viên &amp; Học viên.</p>
+      <p class="sub">Hệ thống luyện viết trực tiếp (Live Sync) kết nối Giáo viên &amp; Học viên.</p>
 
       <div class="role-switcher">
         <button class="role-tab active" id="roleTabStudent" onclick="selectRole('student')">🎓 Học viên (Làm bài)</button>
@@ -735,103 +646,86 @@
         <label for="roomCodeInput">Mã phòng học (Room Code):</label>
         <div class="input-row">
           <input type="text" id="roomCodeInput" value="IELTS-01" placeholder="Ví dụ: IELTS-01" autocomplete="off" style="text-transform: uppercase; font-weight: 700;">
-          <button type="button" class="btn-gen-code" id="genCodeBtn" style="display:none;" onclick="generateRoomCode()">🎲 Tạo mã mới</button>
+          <button type="button" class="btn-gen-code" id="genCodeBtn" style="display:none;" onclick="generateRoomCode()">🎲 Tạo mã</button>
         </div>
       </div>
 
       <div class="rules-box" id="studentRulesBox">
-        <b>Lưu ý chế độ phòng thi:</b>
-        <ul style="padding-left: 18px; margin-top: 4px;">
-          <li>Hệ thống tự động khóa <b>Toàn màn hình (Fullscreen)</b> và không cho thoát sang tab/cửa sổ khác.</li>
-          <li>Bài viết và dàn ý của bạn được đồng bộ trực tiếp sang màn hình của Giáo viên.</li>
-        </ul>
+        <b>Lưu ý phòng thi:</b> Không thoát màn hình hoặc chuyển sang ứng dụng/tab khác khi đang làm bài.
       </div>
 
       <button class="btn-primary-full" id="enterBtn" onclick="enterClassroom()">🚀 BẮT ĐẦU LÀM BÀI</button>
     </div>
   </div>
 
-  <!-- =========================================================
-       2. ANTI-CHEAT WARNING OVERLAY
-       ========================================================= -->
+  <!-- 2. ANTI-CHEAT MODAL -->
   <div id="antiCheatModal">
     <div class="cheat-card">
-      <h2>⚠️ CẢNH BÁO RỜI KHỎI MÀN HÌNH LÀM BÀI!</h2>
-      <p id="cheatReasonText">Bạn vừa chuyển sang tab khác hoặc thoát khỏi chế độ toàn màn hình. Hệ thống đã ghi nhận và báo cáo cho Giáo viên!</p>
+      <h2>⚠️ CẢNH BÁO RỜI KHỎI MÀN HÌNH!</h2>
+      <p id="cheatReasonText">Bạn vừa chuyển sang tab hoặc ứng dụng khác. Hệ thống đã báo cáo cho Giáo viên!</p>
       <button class="btn-return" onclick="returnToExam()">QUAY LẠI BÀI VIẾT NGAY</button>
     </div>
   </div>
 
-  <!-- =========================================================
-       3. TEACHER INSPECT FULL ESSAY MODAL
-       ========================================================= -->
+  <!-- 3. INSPECT MODAL -->
   <div id="inspectModal" onclick="if(event.target===this) closeInspect()">
     <div class="inspect-card">
       <div class="inspect-header">
-        <h3 id="inspectTitle">Bài viết của học viên</h3>
+        <h3 id="inspectTitle" style="font-size:16px;">Bài viết của học viên</h3>
         <button onclick="closeInspect()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">✕</button>
       </div>
       <div class="inspect-body" id="inspectBody"></div>
     </div>
   </div>
 
-  <!-- =========================================================
-       4. TOP HEADER
-       ========================================================= -->
+  <!-- 4. HEADER -->
   <header>
     <div class="header-left">
       <div class="header-title">ielts writing task 2</div>
       <span class="room-pill" id="headerRoomPill">Phòng: -</span>
-      <span class="sync-status"><span class="sync-dot"></span> Live Sync</span>
+      <span class="sync-status" id="headerSyncPill"><span class="sync-dot"></span> Live Sync</span>
     </div>
 
     <div class="header-right">
-      <span id="headerUserBadge" style="font-weight: 700; font-size: 14.5px; color: #334155;"></span>
-      <span class="violation-badge" id="headerViolationBadge" style="display:none;">Thoát màn hình: 0</span>
+      <span id="headerUserBadge" style="font-weight: 700; font-size: 13.5px; color: #334155;"></span>
+      <span class="violation-badge" id="headerViolationBadge" style="display:none;">Thoát: 0</span>
       <div class="timer-box" id="headerTimer">40:00</div>
-      <button class="btn-action btn-submit" id="headerSubmitBtn" style="display:none;" onclick="submitEssay()">NỘP BÀI</button>
+      <button class="btn-submit" id="headerSubmitBtn" style="display:none;" onclick="submitEssay()">NỘP BÀI</button>
     </div>
   </header>
 
-  <!-- =========================================================
-       5. STUDENT WORKSPACE (LEFT: PROMPT & OUTLINE | RIGHT: ESSAY + WORD COUNT)
-       ========================================================= -->
+  <!-- 5. STUDENT WORKSPACE -->
   <div id="studentWorkspace">
-    <!-- BÊN TRÁI: ĐỀ BÀI & DÀN Ý HỌC SINH ĐÃ LÀM SẴN -->
     <div class="left-pane">
       <div class="prompt-card">
         <div class="prompt-label">📌 Đề bài (IELTS Writing Task 2 Prompt)</div>
-        <div class="prompt-text" id="studentPromptText">Đang tải đề bài...</div>
+        <div class="prompt-text" id="studentPromptText"></div>
       </div>
 
       <div class="outline-card">
         <div class="outline-header">
           <span class="outline-label">📝 Dàn ý đã chuẩn bị (Student's Outline)</span>
-          <span style="font-size: 12.5px; color: #92400e;">(Có thể ghi chú thêm)</span>
         </div>
         <textarea class="outline-editor" id="studentOutlineBox" oninput="onStudentType()"></textarea>
       </div>
     </div>
 
-    <!-- BÊN PHẢI: BOX VIẾT BÀI + WORD COUNT -->
     <div class="right-pane">
       <div class="essay-box-wrapper">
         <div class="essay-toolbar">
-          <span><b>Bài viết của bạn (Essay Box)</b> &bull; Mục tiêu tối thiểu: <b>250 words</b></span>
-          <span id="saveIndicator" style="color: #16a34a; font-weight: 600;">✓ Đã đồng bộ</span>
+          <span><b>Bài viết của bạn (Essay Box)</b> &bull; Tối thiểu: <b>250 words</b></span>
+          <span id="saveIndicator" style="color: #16a34a; font-weight: 600;">⏳ Đang kết nối...</span>
         </div>
         <textarea id="essayTextarea" placeholder="Bắt đầu viết bài luận IELTS Writing Task 2 của bạn tại đây..." spellcheck="false" oninput="onStudentType()"></textarea>
         <div class="word-count-bar">
-          <span>Số từ hiện tại (Word Count): <b id="wordCountNum" style="font-size: 17px; color: var(--primary);">0</b> words</span>
+          <span>Word Count: <b id="wordCountNum" style="font-size: 16px; color: var(--primary);">0</b> words</span>
           <span class="wc-badge wc-low" id="wcStatusBadge">Chưa đủ 250 từ</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- =========================================================
-       6. TEACHER LIVE DASHBOARD
-       ========================================================= -->
+  <!-- 6. TEACHER DASHBOARD -->
   <div id="teacherWorkspace">
     <div class="teacher-sidebar">
       <div>
@@ -840,28 +734,21 @@
       </div>
       <div>
         <h3>2. Dàn ý mẫu / Gợi ý dàn ý</h3>
-        <textarea id="teacherOutlineInput" rows="9"></textarea>
+        <textarea id="teacherOutlineInput" rows="8"></textarea>
       </div>
       <button class="btn-push-prompt" onclick="pushRoomPrompt()">🚀 Cập nhật Đề &amp; Dàn ý cho học viên</button>
-      <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-        * Chia sẻ link GitHub và <b>Mã phòng</b> ở góc trên cho học viên. Ngay khi các em nhập mã và gõ chữ, bài viết sẽ hiện trực tiếp ở khung bên phải.
-      </div>
+      <div id="teacherErrorBox" style="display:none; background:#fee2e2; color:#b91c1c; padding:10px; border-radius:8px; font-size:13px;"></div>
     </div>
 
     <div class="teacher-main">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h2 style="font-size: 19px; color: #0f172a;">🖥️ Theo dõi trực tiếp bài làm học viên (<span id="studentCountLabel">0</span>)</h2>
-      </div>
+      <h2 style="font-size: 18px; color: #0f172a; margin-bottom: 14px;">🖥️ Theo dõi trực tiếp học viên (<span id="studentCountLabel">0</span>)</h2>
       <div class="students-grid" id="studentsLiveGrid">
-        <div style="color: var(--text-muted); font-size: 15px;">Chưa có học viên nào tham gia phòng này...</div>
+        <div style="color: var(--text-muted); font-size: 14.5px;">Chưa có học viên nào tham gia phòng này...</div>
       </div>
     </div>
   </div>
 
 <script>
-  // =========================================================
-  // CẤU HÌNH FIREBASE CỦA QUỲNH (ĐÃ GẮN SẴN)
-  // =========================================================
   const firebaseConfig = {
     apiKey: "AIzaSyBw-W796ZDRWh9-t1LVtUbNYc7EazMipXI",
     authDomain: "ielts-writing-task-2-pngquynh.firebaseapp.com",
@@ -875,10 +762,10 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  // Dữ liệu đề & dàn ý mặc định ban đầu
   const defaultPrompt = `Some people think that the best way to reduce crime is to give longer prison sentences. Others, however, believe there are better alternative ways of reducing crime.
 
 Discuss both views and give your own opinion.`;
+
   const defaultOutline = `1. Introduction:
 - Paraphrase topic: Longer prison terms vs. alternative crime-reduction measures.
 - Thesis statement: While harsher sentences have some deterrent effect, education and rehabilitation are more effective in the long run.
@@ -901,7 +788,7 @@ Discuss both views and give your own opinion.`;
   let isSubmitted = false;
   let examActive = false;
   let violations = 0;
-  let totalSeconds = 40 * 60; // 40 phút
+  let totalSeconds = 40 * 60;
   let timerInterval = null;
   let syncTimeout = null;
   let latestStudentsCache = {};
@@ -910,7 +797,6 @@ Discuss both views and give your own opinion.`;
     selectedRole = role;
     document.getElementById("roleTabStudent").classList.toggle("active", role === "student");
     document.getElementById("roleTabTeacher").classList.toggle("active", role === "teacher");
-
     document.getElementById("studentNameGroup").style.display = role === "student" ? "block" : "none";
     document.getElementById("studentRulesBox").style.display = role === "student" ? "block" : "none";
     document.getElementById("genCodeBtn").style.display = role === "teacher" ? "inline-block" : "none";
@@ -924,7 +810,7 @@ Discuss both views and give your own opinion.`;
     document.getElementById("roomCodeInput").value = "IELTS-" + num;
   }
 
-  async function enterClassroom() {
+  function enterClassroom() {
     const roomInput = document.getElementById("roomCodeInput").value.trim().toUpperCase();
     if (!roomInput) {
       alert("Vui lòng nhập Mã phòng học!");
@@ -945,9 +831,13 @@ Discuss both views and give your own opinion.`;
 
       document.getElementById("entryModal").style.display = "none";
       document.getElementById("studentWorkspace").style.display = "grid";
-      document.getElementById("headerUserBadge").textContent = "Học viên: " + studentName;
+      document.getElementById("headerUserBadge").textContent = "HV: " + studentName;
       document.getElementById("headerViolationBadge").style.display = "inline-block";
       document.getElementById("headerSubmitBtn").style.display = "inline-block";
+
+      // Điền sẵn đề & dàn ý mặc định ngay lập tức để không bị treo "Đang tải..."
+      document.getElementById("studentPromptText").textContent = defaultPrompt;
+      document.getElementById("studentOutlineBox").value = defaultOutline;
 
       examActive = true;
       enterFullscreen();
@@ -957,48 +847,40 @@ Discuss both views and give your own opinion.`;
     } else {
       document.getElementById("entryModal").style.display = "none";
       document.getElementById("teacherWorkspace").style.display = "grid";
-      document.getElementById("headerUserBadge").textContent = "Giáo viên giám sát";
+      document.getElementById("headerUserBadge").textContent = "Giáo viên";
       document.getElementById("headerTimer").style.display = "none";
       initTeacherSync();
     }
   }
 
-  // =========================================================
-  // CHẾ ĐỘ KHÓA MÀN HÌNH CHỐNG THOÁT TAB (HỌC VIÊN)
-  // =========================================================
   function enterFullscreen() {
     const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen().catch(() => {});
-    } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen();
-    }
+    if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+    else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
   }
 
   function activateAntiCheat() {
     document.addEventListener("visibilitychange", () => {
       if (document.hidden && examActive && !isSubmitted) {
-        recordViolation("Bạn vừa chuyển sang tab trình duyệt khác!");
+        recordViolation("Bạn vừa chuyển sang tab/ứng dụng khác!");
       }
     });
-
     window.addEventListener("blur", () => {
       if (examActive && !isSubmitted) {
         recordViolation("Bạn vừa rời khỏi cửa sổ làm bài!");
       }
     });
-
     document.addEventListener("fullscreenchange", () => {
       if (!document.fullscreenElement && examActive && !isSubmitted) {
-        recordViolation("Bạn vừa thoát khỏi chế độ Toàn màn hình!");
+        recordViolation("Bạn vừa thoát chế độ Toàn màn hình!");
       }
     });
   }
 
   function recordViolation(msg) {
     violations++;
-    document.getElementById("headerViolationBadge").textContent = `Thoát màn hình: ${violations}`;
-    document.getElementById("cheatReasonText").textContent = `${msg} (Tổng số lần cảnh báo: ${violations})`;
+    document.getElementById("headerViolationBadge").textContent = `Thoát: ${violations}`;
+    document.getElementById("cheatReasonText").textContent = `${msg} (Cảnh báo lần ${violations})`;
     document.getElementById("antiCheatModal").style.display = "flex";
     pushStudentDataToFirestore();
   }
@@ -1008,35 +890,29 @@ Discuss both views and give your own opinion.`;
     enterFullscreen();
   }
 
-  // =========================================================
-  // ĐỒNG BỘ FIREBASE PHÍA HỌC VIÊN
-  // =========================================================
-  async function initStudentSync() {
+  function initStudentSync() {
     const roomRef = db.collection("writing_rooms").doc(currentRoom);
 
-    // Lắng nghe đề bài & dàn ý từ giáo viên theo thời gian thực
     roomRef.onSnapshot((doc) => {
       if (doc.exists) {
         const data = doc.data();
-        document.getElementById("studentPromptText").textContent = data.prompt || defaultPrompt;
+        if (data.prompt) document.getElementById("studentPromptText").textContent = data.prompt;
         const outlineBox = document.getElementById("studentOutlineBox");
         if (!outlineBox.dataset.userEdited && data.outline) {
           outlineBox.value = data.outline;
         }
-      } else {
-        document.getElementById("studentPromptText").textContent = defaultPrompt;
-        document.getElementById("studentOutlineBox").value = defaultOutline;
       }
+    }, (err) => {
+      document.getElementById("saveIndicator").style.color = "#dc2626";
+      document.getElementById("saveIndicator").textContent = "⚠️ Lỗi Firebase: " + err.code;
     });
 
-    // Ghi nhận học viên vào phòng
     pushStudentDataToFirestore();
   }
 
   function countWords(text) {
     const trimmed = text.trim();
-    if (!trimmed) return 0;
-    return trimmed.split(/\s+/).length;
+    return trimmed ? trimmed.split(/\s+/).length : 0;
   }
 
   function onStudentType() {
@@ -1056,11 +932,10 @@ Discuss both views and give your own opinion.`;
       badge.className = "wc-badge wc-low";
     }
 
-    document.getElementById("saveIndicator").textContent = "⏳ Đang đồng bộ...";
+    document.getElementById("saveIndicator").style.color = "#d97706";
+    document.getElementById("saveIndicator").textContent = "⏳ Đang gửi...";
     clearTimeout(syncTimeout);
-    syncTimeout = setTimeout(() => {
-      pushStudentDataToFirestore();
-    }, 500);
+    syncTimeout = setTimeout(pushStudentDataToFirestore, 450);
   }
 
   function pushStudentDataToFirestore() {
@@ -1083,11 +958,12 @@ Discuss both views and give your own opinion.`;
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       }, { merge: true })
       .then(() => {
-        document.getElementById("saveIndicator").textContent = "✓ Đã đồng bộ trực tiếp";
+        document.getElementById("saveIndicator").style.color = "#16a34a";
+        document.getElementById("saveIndicator").textContent = "✓ Đã đồng bộ";
       })
       .catch((err) => {
-        console.error("Firestore sync error:", err);
-        document.getElementById("saveIndicator").textContent = "⚠️ Lỗi Firebase: " + err.code;
+        document.getElementById("saveIndicator").style.color = "#dc2626";
+        document.getElementById("saveIndicator").textContent = "⚠️ Lỗi (" + err.code + "): " + err.message;
       });
   }
 
@@ -1096,7 +972,6 @@ Discuss both views and give your own opinion.`;
     timerInterval = setInterval(() => {
       if (totalSeconds <= 0) {
         clearInterval(timerInterval);
-        alert("Đã hết 40 phút làm bài! Hệ thống tự động nộp bài.");
         submitEssay(true);
         return;
       }
@@ -1110,52 +985,49 @@ Discuss both views and give your own opinion.`;
   function submitEssay(force = false) {
     if (isSubmitted) return;
     const wc = countWords(document.getElementById("essayTextarea").value);
-    if (!force) {
-      if (!confirm(`Bạn đã viết ${wc} từ. Bạn có chắc chắn muốn nộp bài không?`)) return;
-    }
+    if (!force && !confirm(`Bạn đã viết ${wc} từ. Xác nhận nộp bài?`)) return;
 
     clearInterval(timerInterval);
     isSubmitted = true;
     document.getElementById("essayTextarea").disabled = true;
     document.getElementById("studentOutlineBox").disabled = true;
     document.getElementById("headerSubmitBtn").style.display = "none";
-
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
-    }
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
 
     pushStudentDataToFirestore();
     alert(`Nộp bài thành công! Tổng số từ: ${wc} words.`);
   }
 
-  // =========================================================
-  // ĐỒNG BỘ FIREBASE PHÍA GIÁO VIÊN (LIVE DASHBOARD)
-  // =========================================================
   async function initTeacherSync() {
     const roomRef = db.collection("writing_rooms").doc(currentRoom);
-    const snap = await roomRef.get();
+    document.getElementById("teacherPromptInput").value = defaultPrompt;
+    document.getElementById("teacherOutlineInput").value = defaultOutline;
 
-    if (snap.exists) {
-      const data = snap.data();
-      document.getElementById("teacherPromptInput").value = data.prompt || defaultPrompt;
-      document.getElementById("teacherOutlineInput").value = data.outline || defaultOutline;
-    } else {
-      document.getElementById("teacherPromptInput").value = defaultPrompt;
-      document.getElementById("teacherOutlineInput").value = defaultOutline;
-      await roomRef.set({
-        prompt: defaultPrompt,
-        outline: defaultOutline,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+    try {
+      const snap = await roomRef.get();
+      if (snap.exists) {
+        const data = snap.data();
+        if (data.prompt) document.getElementById("teacherPromptInput").value = data.prompt;
+        if (data.outline) document.getElementById("teacherOutlineInput").value = data.outline;
+      } else {
+        await roomRef.set({
+          prompt: defaultPrompt,
+          outline: defaultOutline,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    } catch (err) {
+      const errBox = document.getElementById("teacherErrorBox");
+      errBox.style.display = "block";
+      errBox.textContent = `⚠️ Lỗi kết nối Firebase (${err.code}): ${err.message}`;
     }
 
-    // Lắng nghe toàn bộ học viên trong phòng theo thời gian thực
     roomRef.collection("students").onSnapshot((querySnapshot) => {
       const grid = document.getElementById("studentsLiveGrid");
       document.getElementById("studentCountLabel").textContent = querySnapshot.size;
 
       if (querySnapshot.empty) {
-        grid.innerHTML = `<div style="color: var(--text-muted); font-size: 15px;">Chưa có học viên nào tham gia phòng <b>${currentRoom}</b>...</div>`;
+        grid.innerHTML = `<div style="color: var(--text-muted); font-size: 14.5px;">Chưa có học viên nào tham gia phòng <b>${currentRoom}</b>...</div>`;
         return;
       }
 
@@ -1166,24 +1038,24 @@ Discuss both views and give your own opinion.`;
         const s = doc.data();
         latestStudentsCache[doc.id] = s;
         const statusTag = s.submitted
-          ? `<span style="background:#dcfce7; color:#15803d; padding:2px 8px; border-radius:4px; font-size:12px;">✅ Đã nộp bài</span>`
-          : `<span style="background:#fef3c7; color:#b45309; padding:2px 8px; border-radius:4px; font-size:12px;">✍️ Đang viết...</span>`;
+          ? `<span style="background:#dcfce7; color:#15803d; padding:2px 8px; border-radius:4px; font-size:12px;">✅ Đã nộp</span>`
+          : `<span style="background:#fef3c7; color:#b45309; padding:2px 8px; border-radius:4px; font-size:12px;">✍️ Đang viết</span>`;
 
-        const safeEssay = (s.essay || "<i>(Học viên chưa gõ nội dung...)</i>")
+        const safeEssay = (s.essay || "")
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;");
 
         cardsHtml += `
           <div class="student-live-card ${s.submitted ? 'submitted-card' : ''}">
             <div class="sl-header">
-              <span class="sl-name">👤 ${s.name || "Học viên"}</span>
+              <span style="font-weight:700; font-size:15px;">👤 ${s.name || "Học viên"}</span>
               ${statusTag}
             </div>
             <div class="sl-meta">
               <span>Số từ: <b style="color:var(--primary);">${s.wordCount || 0} words</b></span>
-              <span style="color: ${(s.violations || 0) > 0 ? '#dc2626' : '#64748b'};">Thoát màn hình: <b>${s.violations || 0}</b></span>
+              <span style="color: ${(s.violations || 0) > 0 ? '#dc2626' : '#64748b'};">Thoát: <b>${s.violations || 0}</b></span>
             </div>
-            <div class="sl-essay-preview">${s.essay ? safeEssay : '<span style="color:#94a3b8; font-style:italic;">(Học viên chưa bắt đầu gõ bài...)</span>'}</div>
+            <div class="sl-essay-preview">${safeEssay || '<span style="color:#94a3b8; font-style:italic;">(Chưa gõ nội dung...)</span>'}</div>
             <div class="sl-footer">
               <button class="btn-inspect" onclick="inspectStudent('${doc.id}')">🔍 Phóng to bài &amp; Dàn ý</button>
             </div>
@@ -1193,30 +1065,34 @@ Discuss both views and give your own opinion.`;
 
       grid.innerHTML = cardsHtml;
     }, (err) => {
-      document.getElementById("studentsLiveGrid").innerHTML = `<div style="color:#dc2626; font-weight:bold;">⚠️ Lỗi kết nối Firestore (${err.code}): ${err.message}</div>`;
+      document.getElementById("studentsLiveGrid").innerHTML = `<div style="color:#dc2626; font-weight:bold;">⚠️ Lỗi Firestore (${err.code}): ${err.message}</div>`;
     });
   }
 
   async function pushRoomPrompt() {
     const promptVal = document.getElementById("teacherPromptInput").value;
     const outlineVal = document.getElementById("teacherOutlineInput").value;
-    await db.collection("writing_rooms").doc(currentRoom).set({
-      prompt: promptVal,
-      outline: outlineVal,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
-    alert("Đã cập nhật Đề bài & Dàn ý trực tiếp tới màn hình của toàn bộ học viên!");
+    try {
+      await db.collection("writing_rooms").doc(currentRoom).set({
+        prompt: promptVal,
+        outline: outlineVal,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+      alert("Đã cập nhật Đề bài & Dàn ý cho cả lớp!");
+    } catch (err) {
+      alert("Lỗi cập nhật (" + err.code + "): " + err.message);
+    }
   }
 
   function inspectStudent(docId) {
     const s = latestStudentsCache[docId];
     if (!s) return;
-    document.getElementById("inspectTitle").textContent = `👤 ${s.name} — ${s.wordCount || 0} words (Thoát màn hình: ${s.violations || 0})`;
+    document.getElementById("inspectTitle").textContent = `👤 ${s.name} — ${s.wordCount || 0} words`;
     document.getElementById("inspectBody").innerHTML = `
-      <div style="background:#fffbeb; border-left:4px solid #f59e0b; padding:12px 16px; margin-bottom:18px; font-family:'Google Sans', sans-serif; font-size:14.5px;">
-        <b>📝 Dàn ý của học viên:</b><br>${(s.outline || "(Trống)").replace(/</g, "&lt;")}
+      <div style="background:#fffbeb; border-left:4px solid #f59e0b; padding:12px 14px; margin-bottom:16px; font-family:sans-serif; font-size:14px;">
+        <b>📝 Dàn ý:</b><br>${(s.outline || "(Trống)").replace(/</g, "&lt;")}
       </div>
-      <div><b>📄 Bài viết chi tiết:</b><br><br>${(s.essay || "(Chưa viết bài)").replace(/</g, "&lt;")}</div>
+      <div><b>📄 Bài viết:</b><br><br>${(s.essay || "(Chưa viết)").replace(/</g, "&lt;")}</div>
     `;
     document.getElementById("inspectModal").style.display = "flex";
   }
