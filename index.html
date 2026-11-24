@@ -1,4 +1,4 @@
-html_code = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
@@ -1030,7 +1030,8 @@ Discuss both views and give your own opinion.`;
       };
     }
 
-    const paragraphs = trimmed.split(/\n+/).map(p => p.trim()).filter(p => p.length > 0);
+    const paragraphs = trimmed.split(/
++/).map(p => p.trim()).filter(p => p.length > 0);
     const sentences = trimmed.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
     const lowerWords = words.map(w => w.toLowerCase().replace(/[^a-z']/g, "")).filter(Boolean);
     const uniqueWords = new Set(lowerWords);
@@ -1047,7 +1048,7 @@ Discuss both views and give your own opinion.`;
     const matchedKeywords = promptKeywords.filter(kw => lowerWords.includes(kw));
     const relevanceRatio = matchedKeywords.length / Math.max(promptKeywords.length, 1);
 
-    const hasOpinionMarker = /\b(i believe|in my opinion|from my perspective|i agree|i disagree|personally|my view)\b/i.test(trimmed);
+    const hasOpinionMarker = / (i believe|in my opinion|from my perspective|i agree|i disagree|personally|my view) /i.test(trimmed);
 
     if (wc < 150) {
       tr = 4.0;
@@ -1078,7 +1079,7 @@ Discuss both views and give your own opinion.`;
       "consequently", "therefore", "as a result", "for example", "for instance",
       "in conclusion", "to sum up", "firstly", "secondly", "although", "despite", "whereas", "while"
     ];
-    const usedCohesive = cohesiveDevices.filter(cd => new RegExp(`\\b${cd}\\b`, "i").test(trimmed));
+    const usedCohesive = cohesiveDevices.filter(cd => new RegExp(`\b${cd}\b`, "i").test(trimmed));
 
     if (paragraphs.length < 3) {
       cc = 5.0;
@@ -1098,7 +1099,7 @@ Discuss both views and give your own opinion.`;
     // 3. LEXICAL RESOURCE (LR)
     let lr = 6.0;
     const longVocabCount = lowerWords.filter(w => w.length >= 8).length;
-    const informalMatches = trimmed.match(/\b(kids|a lot of|lots of|stuff|things|good|bad|big|very|gonna|wanna|don't|can't|won't|it's|they're)\b/gi) || [];
+    const informalMatches = trimmed.match(/ (kids|a lot of|lots of|stuff|things|good|bad|big|very|gonna|wanna|don't|can't|won't|it's|they're) /gi) || [];
 
     if (ttr < 0.42) {
       lr = 5.0;
@@ -1118,7 +1119,7 @@ Discuss both views and give your own opinion.`;
     // 4. GRAMMATICAL RANGE & ACCURACY (GRA)
     let gra = 6.0;
     const avgSentLen = wc / Math.max(sentences.length, 1);
-    const complexMarkers = trimmed.match(/\b(which|that|who|whom|whose|although|even though|whereas|while|because|since|if|unless|when|after|before)\b/gi) || [];
+    const complexMarkers = trimmed.match(/ (which|that|who|whom|whose|although|even though|whereas|while|because|since|if|unless|when|after|before) /gi) || [];
     const lowercaseStartErrors = sentences.filter(s => /^[a-z]/.test(s)).length;
     const doubleSpacesOrPunct = (trimmed.match(/\s+[,.!?;:]|[,.!?;:][A-Za-z]/g) || []).length;
 
@@ -1518,10 +1519,3 @@ Discuss both views and give your own opinion.`;
 </script>
 </body>
 </html>
-"""
-
-output_filename = "IELTS_Writing_Task2_Live_Classroom_v3.html"
-with open(output_filename, "w", encoding="utf-8") as f:
-    f.write(html_code)
-
-print("Generated:", output_filename)
