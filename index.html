@@ -9,10 +9,76 @@
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Firebase Compat SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+  window.selectRole = selectRole;
+  window.generateRoomCode = generateRoomCode;
+  window.enterClassroom = enterClassroom;
+  window.returnToExam = returnToExam;
+  window.onStudentType = onStudentType;
+  window.submitEssay = submitEssay;
+  window.pushRoomPrompt = pushRoomPrompt;
+  window.inspectStudent = inspectStudent;
+  window.closeInspect = closeInspect;
+  window.exportClassToExcel = exportClassToExcel;
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const btnStu = document.getElementById("roleTabStudent");
+    const btnTea = document.getElementById("roleTabTeacher");
+    const btnGen = document.getElementById("genCodeBtn");
+    const btnEnt = document.getElementById("enterBtn");
+    if (btnStu) btnStu.addEventListener("click", () => selectRole("student"));
+    if (btnTea) btnTea.addEventListener("click", () => selectRole("teacher"));
+    if (btnGen) btnGen.addEventListener("click", generateRoomCode);
+    if (btnEnt) btnEnt.addEventListener("click", enterClassroom);
+  });
+</script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js">
+  window.selectRole = selectRole;
+  window.generateRoomCode = generateRoomCode;
+  window.enterClassroom = enterClassroom;
+  window.returnToExam = returnToExam;
+  window.onStudentType = onStudentType;
+  window.submitEssay = submitEssay;
+  window.pushRoomPrompt = pushRoomPrompt;
+  window.inspectStudent = inspectStudent;
+  window.closeInspect = closeInspect;
+  window.exportClassToExcel = exportClassToExcel;
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const btnStu = document.getElementById("roleTabStudent");
+    const btnTea = document.getElementById("roleTabTeacher");
+    const btnGen = document.getElementById("genCodeBtn");
+    const btnEnt = document.getElementById("enterBtn");
+    if (btnStu) btnStu.addEventListener("click", () => selectRole("student"));
+    if (btnTea) btnTea.addEventListener("click", () => selectRole("teacher"));
+    if (btnGen) btnGen.addEventListener("click", generateRoomCode);
+    if (btnEnt) btnEnt.addEventListener("click", enterClassroom);
+  });
+</script>
   <!-- SheetJS (XLSX) for Excel Export -->
-  <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js">
+  window.selectRole = selectRole;
+  window.generateRoomCode = generateRoomCode;
+  window.enterClassroom = enterClassroom;
+  window.returnToExam = returnToExam;
+  window.onStudentType = onStudentType;
+  window.submitEssay = submitEssay;
+  window.pushRoomPrompt = pushRoomPrompt;
+  window.inspectStudent = inspectStudent;
+  window.closeInspect = closeInspect;
+  window.exportClassToExcel = exportClassToExcel;
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const btnStu = document.getElementById("roleTabStudent");
+    const btnTea = document.getElementById("roleTabTeacher");
+    const btnGen = document.getElementById("genCodeBtn");
+    const btnEnt = document.getElementById("enterBtn");
+    if (btnStu) btnStu.addEventListener("click", () => selectRole("student"));
+    if (btnTea) btnTea.addEventListener("click", () => selectRole("teacher"));
+    if (btnGen) btnGen.addEventListener("click", generateRoomCode);
+    if (btnEnt) btnEnt.addEventListener("click", enterClassroom);
+  });
+</script>
 
   <style>
     :root {
@@ -742,8 +808,8 @@
       <p class="sub">Hệ thống luyện viết trực tiếp (Live Sync) &amp; Chấm điểm tự động theo IELTS Band Descriptors.</p>
 
       <div class="role-switcher">
-        <button class="role-tab active" id="roleTabStudent" onclick="selectRole('student')">🎓 Học viên (Làm bài)</button>
-        <button class="role-tab" id="roleTabTeacher" onclick="selectRole('teacher')">👩‍🏫 Giáo viên (Theo dõi)</button>
+        <button type="button" class="role-tab active" id="roleTabStudent" onclick="selectRole('student')">🎓 Học viên (Làm bài)</button>
+        <button type="button" class="role-tab" id="roleTabTeacher" onclick="selectRole('teacher')">👩‍🏫 Giáo viên (Theo dõi)</button>
       </div>
 
       <div class="form-group" id="studentNameGroup">
@@ -763,7 +829,8 @@
         <b>Lưu ý phòng thi:</b> Không thoát màn hình hoặc chuyển sang ứng dụng/tab khác khi đang làm bài. Sau khi nộp bài, hệ thống sẽ ước tính Band Score và chỉ ra các lỗi sơ lược.
       </div>
 
-      <button class="btn-primary-full" id="enterBtn" onclick="enterClassroom()">🚀 BẮT ĐẦU LÀM BÀI</button>
+      <div id="entryErrorMsg" style="display:none; background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; padding:10px 12px; border-radius:8px; font-size:13.5px; font-weight:700; margin-bottom:12px;"></div>
+      <button type="button" class="btn-primary-full" id="enterBtn" onclick="enterClassroom()">🚀 BẮT ĐẦU LÀM BÀI</button>
     </div>
   </div>
 
@@ -946,8 +1013,11 @@ Discuss both views and give your own opinion.`;
 
   function enterClassroom() {
     const roomInput = document.getElementById("roomCodeInput").value.trim().toUpperCase();
+    const errBox = document.getElementById("entryErrorMsg");
+    errBox.style.display = "none";
     if (!roomInput) {
-      alert("Vui lòng nhập Mã phòng học!");
+      errBox.textContent = "⚠️ Vui lòng nhập Mã phòng học!";
+      errBox.style.display = "block";
       return;
     }
     currentRoom = roomInput;
@@ -956,7 +1026,8 @@ Discuss both views and give your own opinion.`;
     if (selectedRole === "student") {
       const nameVal = document.getElementById("userNameInput").value.trim();
       if (!nameVal) {
-        alert("Vui lòng nhập họ và tên học viên!");
+        errBox.textContent = "⚠️ Vui lòng nhập họ và tên học viên trước khi bắt đầu!";
+        errBox.style.display = "block";
         document.getElementById("userNameInput").focus();
         return;
       }
@@ -1435,18 +1506,19 @@ Discuss both views and give your own opinion.`;
     if (!s) return;
     const bandInfo = s.estimatedBand ? ` | Est. Band: ${s.estimatedBand}` : "";
     document.getElementById("inspectTitle").textContent = `👤 ${s.name} — ${s.wordCount || 0} words${bandInfo}`;
-    document.getElementById("inspectBody").innerHTML = `
-      ${s.estimatedBand ? `
-        <div style="background:#eff6ff; border-left:4px solid #1a73e8; padding:12px 14px; margin-bottom:14px; font-family:sans-serif; font-size:14px;">
-          <b>📊 Estimated Band Score: ${s.estimatedBand}</b> (TR: ${s.trScore} | CC: ${s.ccScore} | LR: ${s.lrScore} | GRA: ${s.graScore})<br>
-          <span style="color:#991b1b;"><b>Lỗi sơ lược:</b> ${s.briefErrors || ""}</span>
-        </div>
-      ` : ""}
-      <div style="background:#fffbeb; border-left:4px solid #f59e0b; padding:12px 14px; margin-bottom:16px; font-family:sans-serif; font-size:14px;">
-        <b>📝 Dàn ý của học viên:</b><br>${(s.outline || "(Trống)").replace(/</g, "&lt;")}
-      </div>
-      <div><b>📄 Bài viết:</b><br><br>${(s.essay || "(Chưa viết)").replace(/</g, "&lt;")}</div>
-    `;
+    let scoreBannerHtml = "";
+    if (s.estimatedBand) {
+      scoreBannerHtml = '<div style="background:#eff6ff; border-left:4px solid #1a73e8; padding:12px 14px; margin-bottom:14px; font-family:sans-serif; font-size:14px;">' +
+        '<b>📊 Estimated Band Score: ' + s.estimatedBand + '</b> (TR: ' + s.trScore + ' | CC: ' + s.ccScore + ' | LR: ' + s.lrScore + ' | GRA: ' + s.graScore + ')<br>' +
+        '<span style="color:#991b1b;"><b>Lỗi sơ lược:</b> ' + (s.briefErrors || "") + '</span>' +
+        '</div>';
+    }
+    const safeOutline = (s.outline || "(Trống)").replace(/</g, "&lt;");
+    const safeEssayFull = (s.essay || "(Chưa viết)").replace(/</g, "&lt;");
+    document.getElementById("inspectBody").innerHTML = scoreBannerHtml +
+      '<div style="background:#fffbeb; border-left:4px solid #f59e0b; padding:12px 14px; margin-bottom:16px; font-family:sans-serif; font-size:14px;">' +
+      '<b>📝 Dàn ý của học viên:</b><br>' + safeOutline + '</div>' +
+      '<div><b>📄 Bài viết:</b><br><br>' + safeEssayFull + '</div>';
     document.getElementById("inspectModal").style.display = "flex";
   }
 
@@ -1545,6 +1617,28 @@ Discuss both views and give your own opinion.`;
     const fileName = `IELTS_Writing_Task2_${currentRoom}_${new Date().toISOString().slice(0, 10)}.xlsx`;
     XLSX.writeFile(wb, fileName);
   }
+
+  window.selectRole = selectRole;
+  window.generateRoomCode = generateRoomCode;
+  window.enterClassroom = enterClassroom;
+  window.returnToExam = returnToExam;
+  window.onStudentType = onStudentType;
+  window.submitEssay = submitEssay;
+  window.pushRoomPrompt = pushRoomPrompt;
+  window.inspectStudent = inspectStudent;
+  window.closeInspect = closeInspect;
+  window.exportClassToExcel = exportClassToExcel;
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const btnStu = document.getElementById("roleTabStudent");
+    const btnTea = document.getElementById("roleTabTeacher");
+    const btnGen = document.getElementById("genCodeBtn");
+    const btnEnt = document.getElementById("enterBtn");
+    if (btnStu) btnStu.addEventListener("click", () => selectRole("student"));
+    if (btnTea) btnTea.addEventListener("click", () => selectRole("teacher"));
+    if (btnGen) btnGen.addEventListener("click", generateRoomCode);
+    if (btnEnt) btnEnt.addEventListener("click", enterClassroom);
+  });
 </script>
 </body>
 </html>
